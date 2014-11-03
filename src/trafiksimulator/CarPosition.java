@@ -30,22 +30,22 @@ public class CarPosition{
 	{
 		if (currentCar == null) return;
 		if(isEnd(this)){
-			if(owner.light != null){
-				if(!owner.light.isGreen()) return;
+			if(owner.getLight() != null){
+				if(!owner.getLight().isGreen()) return;
 			}
-			if(owner.nextLane == null) currentCar = null;		
-			else if(owner.nextLane.lastFree()){
-				if(owner.nextLane.putLast(currentCar)) currentCar = null;
+			if(owner.getNextLane() == null) currentCar = null;		
+			else if(owner.getNextLane().lastFree()){
+				if(owner.getNextLane().putLast(currentCar)) currentCar = null;
 			}
 		}
-		else if(currentCar.dest == 1 || turn == null){
-			if(forward.currentCar == null){
-				forward.currentCar = currentCar;
+		else if(currentCar.getDest() == 1 || turn == null){
+			if(forward.getCurrentCar() == null){
+				forward.setCurrentCar(currentCar);
 				currentCar = null;
 			}
 			}else{
-				if(turn.currentCar == null){
-					turn.currentCar = currentCar;
+				if(turn.getCurrentCar() == null){
+					turn.setCurrentCar(currentCar);
 					currentCar = null;
 				}
 			}

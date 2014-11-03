@@ -3,7 +3,7 @@ package trafiksimulator;
 public class Car {
 
     private int bornTime;
-    public int dest; // 1 för rakt fram, 2 för vänstersväng
+    private int dest; // 1 för rakt fram, 2 för vänstersväng
 
     // konstruktor och get-metoder
     public Car(int bornTime, int dest){
