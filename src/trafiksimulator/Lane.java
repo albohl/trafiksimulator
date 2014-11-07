@@ -73,8 +73,7 @@ public class Lane {
     		theLane[theLane.length - 1].setCurrentCar(c);
     		return true;
     	}
-    	//throw new OverflowException();
-    	return false;
+    	throw new OverflowException();
     }
     
     public Light getLight(){

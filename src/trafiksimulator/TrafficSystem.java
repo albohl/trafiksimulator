@@ -20,6 +20,7 @@ public class TrafficSystem {
     private int avTime2;
     private int maxTime1;
     private int maxTime2;
+    private int fullLaneCount;
 
     // Diverse attribut för simuleringsparametrar (ankomstintensiteter,
     // destinationer...)
@@ -82,7 +83,10 @@ public class TrafficSystem {
     		int dest;
     		if(Math.random() > 0.5)  dest = 1;
     		else dest = 2;
-    		r0.putLast(new Car(time, dest));
+    		try{r0.putLast(new Car(time, dest));}
+    		catch(Lane.OverflowException e){
+    			fullLaneCount++;
+    		}
     	}
     	time++;
     	
@@ -96,6 +100,7 @@ public class TrafficSystem {
     	System.out.println("Average time lane r2: " + avTime2 + "\n");
     	System.out.println("Max time lane r1: " + maxTime1 + "\n");
     	System.out.println("Max time lane r2: " + maxTime2 + "\n");
+    	System.out.println("Number of full lane exceptions: " + fullLaneCount + "\n");
     }
 
     public void print() {
