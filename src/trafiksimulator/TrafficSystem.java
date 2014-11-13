@@ -1,25 +1,54 @@
 package trafiksimulator;
 
+// TODO: Auto-generated Javadoc
 //import java.awt.event.*;
 
+/**
+ * The Class TrafficSystem.
+ */
 public class TrafficSystem {
     // Definierar de vägar och signaler som ingår i det 
     // system som skall studeras.
     // Samlar statistik
     
     // Attribut som beskriver beståndsdelarna i systemet
+    /** The r0. */
     private Lane  r0;
+    
+    /** The r1. */
     private Lane  r1;
+    
+    /** The r2. */
     private Lane  r2;
+    
+    /** The s1. */
     private Light s1;
+    
+    /** The s2. */
     private Light s2;
+    
+    /** The arrival intensity. */
     private int arrivalIntensity;
+    
+    /** The pc1. */
     private int pc1;
+    
+    /** The pc2. */
     private int pc2;
+    
+    /** The av time1. */
     private int avTime1;
+    
+    /** The av time2. */
     private int avTime2;
+    
+    /** The max time1. */
     private int maxTime1;
+    
+    /** The max time2. */
     private int maxTime2;
+    
+    /** The full lane count. */
     private int fullLaneCount;
 
     // Diverse attribut för simuleringsparametrar (ankomstintensiteter,
@@ -28,8 +57,19 @@ public class TrafficSystem {
     // Diverse attribut för statistiksamling
     //....
     
+    /** The time. */
     private int time;
 
+    /**
+     * Instantiates a new traffic system.
+     *
+     * @param p the p
+     * @param g1 the g1
+     * @param g2 the g2
+     * @param a the a
+     * @param l1 the l1
+     * @param l2 the l2
+     */
     public TrafficSystem(int p, int g1, int g2, int a, int l1, int l2) {
     	s1 = new Light(p, g1);
     	s2 = new Light(p, g2);
@@ -39,6 +79,9 @@ public class TrafficSystem {
     	
     }
 
+    /**
+     * Read parameters.
+     */
     public void readParameters() {
 	// Läser in parametrar för simuleringen
 	// Metoden kan läsa från terminalfönster, dialogrutor
@@ -48,6 +91,9 @@ public class TrafficSystem {
         // Standardklassen Properties är användbar för detta. 
     }
 
+    /**
+     * Step.
+     */
     public void step() {
 	// Stega systemet ett tidssteg m h a komponenternas step-metoder
 	// Skapa bilar, lägg in och ta ur på de olika Lane-kompenenterna
@@ -83,6 +129,7 @@ public class TrafficSystem {
     		int dest;
     		if(Math.random() > 0.5)  dest = 1;
     		else dest = 2;
+    		
     		try{r0.putLast(new Car(time, dest));}
     		catch(Lane.OverflowException e){
     			fullLaneCount++;
@@ -92,6 +139,9 @@ public class TrafficSystem {
     	
     }
 
+    /**
+     * Prints the statistics.
+     */
     public void printStatistics() {
 	// Skriv statistiken samlad så här långt
     	System.out.println("Passed cars lane r1: " + pc1 + "\n");
@@ -103,6 +153,9 @@ public class TrafficSystem {
     	System.out.println("Number of full lane exceptions: " + fullLaneCount + "\n");
     }
 
+    /**
+     * Prints the.
+     */
     public void print() {
 	// Skriv ut en grafisk representation av kösituationen
 	// med hjälp av klassernas toString-metoder
