@@ -7,16 +7,6 @@ import org.junit.Test;
 public class CarPositionTest {
 
 	@Test
-	public void testCarPositionLaneCarPositionCarPosition() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testCarPositionLaneCarPosition() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testIsEnd() {
 		fail("Not yet implemented");
 	}
