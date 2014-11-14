@@ -9,7 +9,7 @@ public class Lane {
 	/**
 	 * The Class OverflowException.
 	 */
-	public static class OverflowException extends RuntimeException {
+	public static class OverflowException extends Exception {
 		// Undantag som kastas när det inte gick att lägga 
 		// in en ny bil på vägen
 	}
@@ -33,6 +33,7 @@ public class Lane {
      */
     public Lane(int n, Lane nextLane, Light light, Lane turn) {
 	// Konstruerar ett Lane-objekt med plats för n fordon
+    	if(n < 0) throw new IllegalArgumentException();
     	theLane = new CarPosition[n];
     	theLane[0] = new CarPosition(this, null, turn.theLane[0]);
 		for(int i = 1; i < n; ++i){
@@ -50,6 +51,7 @@ public class Lane {
      * @param light the light
      */
     public Lane(int n, Lane nextLane, Light light){
+    	if(n < 0) throw new IllegalArgumentException();
     	theLane = new CarPosition[n];
     	theLane[0] = new CarPosition(this, null);
 		for(int i = 1; i < n; ++i){
@@ -125,12 +127,12 @@ public class Lane {
      * @return true, if successful
      * @throws OverflowException the overflow exception
      */
-    public boolean putLast(Car c) throws OverflowException {
+    public void putLast(Car c) throws OverflowException {
 	// Ställ en bil på sista platsen på vägen
 	// (om det går).
     	if (theLane[theLane.length - 1].getCurrentCar() == null){
     		theLane[theLane.length - 1].setCurrentCar(c);
-    		return true;
+    		return;
     	}
     	throw new OverflowException();
     }

@@ -6,12 +6,13 @@ public class Light {
     private int green; // Signalen grön när time<green 
 
     public Light(int period, int green) {
+    	if(period < 0 || green < 0 || green > period) throw new IllegalArgumentException();
     	this.period = period;
     	this.green = green;
     	time = 0;
     }
 
-    public void    step() { 
+    public void step() { 
        time++;
        if (time == period) time = 0;
     }
@@ -19,6 +20,18 @@ public class Light {
     public boolean isGreen()   {
     	if(time < green) return true;
     	return false;
+    }
+    
+    public int getPeriod(){
+    	return period;
+    }
+    
+    public int getTime(){
+    	return time;
+    }
+    
+    public int getGreen(){
+    	return green;
     }
 
     public String  toString()  {

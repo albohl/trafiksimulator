@@ -35,7 +35,11 @@ public class CarPosition{
 			}
 			if(owner.getNextLane() == null) currentCar = null;		
 			else if(owner.getNextLane().lastFree()){
-				if(owner.getNextLane().putLast(currentCar)) currentCar = null;
+				try{owner.getNextLane().putLast(currentCar);}
+				catch(Lane.OverflowException e){
+	    			return;
+	    		}
+				currentCar = null;
 			}
 		}
 		else if(currentCar.getDest() == 1 || turn == null){
