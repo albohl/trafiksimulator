@@ -33,6 +33,7 @@ public class Lane {
      */
     public Lane(int n, Lane nextLane, Light light, Lane turn) {
 	// Konstruerar ett Lane-objekt med plats för n fordon
+    	if(n < 0) throw new IllegalArgumentException();
     	theLane = new CarPosition[n];
     	theLane[0] = new CarPosition(this, null, turn.theLane[0]);
 		for(int i = 1; i < n; ++i){
@@ -50,6 +51,7 @@ public class Lane {
      * @param light the traffic light
      */
     public Lane(int n, Lane nextLane, Light light){
+    	if(n < 0) throw new IllegalArgumentException();
     	theLane = new CarPosition[n];
     	theLane[0] = new CarPosition(this, null);
 		for(int i = 1; i < n; ++i){

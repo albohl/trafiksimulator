@@ -15,6 +15,7 @@ public class Car {
      * @param dest
      */
     public Car(int bornTime, int dest){
+    	if(bornTime < 0 || dest < 1 || dest > 2) throw new IllegalArgumentException();
     	this.bornTime = bornTime;
     	this.dest = dest;
     }

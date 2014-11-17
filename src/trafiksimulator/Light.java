@@ -22,6 +22,7 @@ public class Light {
      * @param green the length of time the light is green
      */
     public Light(int period, int green) {
+    	if(period < 0 || green < 0 || green > period) throw new IllegalArgumentException();
     	this.period = period;
     	this.green = green;
     	time = 0;
@@ -31,7 +32,7 @@ public class Light {
      * Steps the clock forward, loops back around if the time is equal to the 
      * period.
      */
-    public void    step() { 
+    public void step() { 
        time++;
        if (time == period) time = 0;
     }
@@ -44,6 +45,33 @@ public class Light {
     public boolean isGreen()   {
     	if(time < green) return true;
     	return false;
+    }
+    /** 
+     * Returns the period of the traffic light
+     * 
+     * @return the period of the traffic light
+     */
+    
+    public int getPeriod(){
+    	return period;
+    }
+    /** 
+     * Returns the current time of the traffic light
+     * 
+     * @return the current time of the traffic light
+     */
+    
+    public int getTime(){
+    	return time;
+    }
+    /** 
+     * Returns the green time of the traffic light
+     * 
+     * @return the green time of the traffic light
+     */
+    
+    public int getGreen(){
+    	return green;
     }
 
     /** 
