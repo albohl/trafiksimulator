@@ -9,31 +9,30 @@ public class Lane {
 	/**
 	 * The Class OverflowException.
 	 */
-	public static class OverflowException extends Exception {
+	public static class OverflowException extends RuntimeException {
 		// Undantag som kastas när det inte gick att lägga 
 		// in en ny bil på vägen
 	}
 
-    /** The lane. */
+    /** An array of carPosition objects that make up the lane segment. */
     private CarPosition[] theLane;
     
-    /** The next lane. */
+    /** The lane object this lane segment leads into. */
     public Lane nextLane;
     
-    /** The light. */
+    /** The traffic light of this lane segment if it has one, null otherwise  */
     public Light light;
 
     /**
      * Instantiates a new lane.
      *
-     * @param n the n
-     * @param nextLane the next lane
-     * @param light the light
-     * @param turn the turn
+     * @param n the length of the lane segment
+     * @param nextLane the next lane object
+     * @param light the traffic light
+     * @param turn the lane beside this lane
      */
     public Lane(int n, Lane nextLane, Light light, Lane turn) {
 	// Konstruerar ett Lane-objekt med plats för n fordon
-    	if(n < 0) throw new IllegalArgumentException();
     	theLane = new CarPosition[n];
     	theLane[0] = new CarPosition(this, null, turn.theLane[0]);
 		for(int i = 1; i < n; ++i){
@@ -46,12 +45,11 @@ public class Lane {
     /**
      * Instantiates a new lane.
      *
-     * @param n the n
-     * @param nextLane the next lane
-     * @param light the light
+     * @param n the length of the lane segment
+     * @param nextLane the next lane object
+     * @param light the traffic light
      */
     public Lane(int n, Lane nextLane, Light light){
-    	if(n < 0) throw new IllegalArgumentException();
     	theLane = new CarPosition[n];
     	theLane[0] = new CarPosition(this, null);
 		for(int i = 1; i < n; ++i){
@@ -62,10 +60,10 @@ public class Lane {
     }
     
     /**
-     * Match end.
+     * Checks if the car position target is the last in the lane.
      *
-     * @param target the target
-     * @return true, if successful
+     * @param target the car position in question.
+     * @return true, if target is the last carPosition in the lane, false otherwise
      */
     public boolean matchEnd(CarPosition target)
     {
@@ -76,7 +74,7 @@ public class Lane {
     }
 
     /**
-     * Step.
+     * Iterates through the lane and moves all the cars forward if possible.
      */
     public void step() {
 	// Stega fram alla fordon (utom det på plats 0) ett steg 
@@ -88,9 +86,9 @@ public class Lane {
     }
 
     /**
-     * Gets the first.
+     * Returns the first car in the lane and removes it.
      *
-     * @return the first
+     * @return the first car in the lane.
      */
     public Car getFirst() {
 	// Returnera och tag bort bilen som står först
@@ -99,9 +97,9 @@ public class Lane {
     }
 
     /**
-     * First car.
+     * Returns the first car without removing it.
      *
-     * @return the car
+     * @return the first car in the lane.
      */
     public Car firstCar() {
 	// Returnera bilen som står först utan att ta bort den
@@ -110,9 +108,9 @@ public class Lane {
 
 
     /**
-     * Last free.
+     *Checks if the last position in the lane is free.
      *
-     * @return true, if successful
+     * @return true, if the last position is free, false otherwise
      */
     public boolean lastFree() {
 	// Returnera true om sista platsen ledig, annars false
@@ -121,11 +119,11 @@ public class Lane {
     }
 
     /**
-     * Put last.
+     * Places the car c last in the lane if the position is empty, throws OverflowException otherwise.
+     * 
      *
-     * @param c the c
-     * @return true, if successful
-     * @throws OverflowException the overflow exception
+     * @param c the car
+     * @throws OverflowException Thrown if the last position in the lane is full.
      */
     public void putLast(Car c) throws OverflowException {
 	// Ställ en bil på sista platsen på vägen
@@ -138,7 +136,7 @@ public class Lane {
     }
     
     /**
-     * Gets the light.
+     * Returns the traffic light of the lane.
      *
      * @return the light
      */
@@ -147,34 +145,36 @@ public class Lane {
     }
     
     /**
-     * Sets the light.
+     * Sets the traffic light of the lane.
      *
-     * @param light the new light
+     * @param light the traffic light
      */
     public void setLight(Light light){
     	this.light = light;
     }
     
     /**
-     * Gets the next lane.
+     * Returns the next lane segment.
      *
-     * @return the next lane
+     * @return the next lane segment
      */
     public Lane getNextLane(){
     	return nextLane;
     }
     
     /**
-     * Sets the next lane.
+     * Sets the next lane segment.
      *
-     * @param nextLane the new next lane
+     * @param nextLane the next lane
      */
     public void setNextLane(Lane nextLane){
     	this.nextLane = nextLane;
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#toString()
+    /** 
+     * Converts the contents of the lane into a string.
+     * 
+     * @return the contents of the lane as a string
      */
     public String toString() {
     	String returnMsg = "";

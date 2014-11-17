@@ -1,5 +1,9 @@
 package trafiksimulator;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
 // TODO: Auto-generated Javadoc
 //import java.awt.event.*;
 
@@ -12,40 +16,56 @@ public class TrafficSystem {
     // Samlar statistik
     
     // Attribut som beskriver beståndsdelarna i systemet
-    /** The r0. */
+    /** The first lane segment without a lane to the side. */
     private Lane  r0;
     
-    /** The r1. */
+    /** The lane segment following on from r0 meant for cars going forward*/
     private Lane  r1;
     
-    /** The r2. */
+    /** The lane segment to the side of r1 meant for cars that are going to turn */
     private Lane  r2;
     
-    /** The s1. */
+    /** The light for the lane going forward. */
     private Light s1;
     
-    /** The s2. */
+    /** The light for the lane going to turn*/
     private Light s2;
     
-    /** The arrival intensity. */
+    /** The period for the traffic lights*/
+    private int p;
+    
+    /** The green time for the first light*/
+    private int g1;
+    
+    /** The green time for the second light*/
+    private int g2;
+    
+    /** The length of the first lane segment (where there is only one lane)*/
+    private int l1;
+    
+    /** The length of the segment lane segment (where there are two lanes)*/
+    private int l2;
+    
+    /** The arrival intensity, as a percentage chance of a car arriving each 
+     * time unit */
     private int arrivalIntensity;
     
-    /** The pc1. */
+    /** The number of cars that have passed the first lane. */
     private int pc1;
     
-    /** The pc2. */
+    /** The number of cars that have passed the second lane. */
     private int pc2;
     
-    /** The av time1. */
+    /** The average time the cars spent in the first lane. */
     private int avTime1;
     
-    /** The av time2. */
+    /** The average time the cars spent in the second lane. */
     private int avTime2;
     
-    /** The max time1. */
+    /** The maximum time spent in the first lane. */
     private int maxTime1;
     
-    /** The max time2. */
+    /** The The maximum time spent in the second lane. */
     private int maxTime2;
     
     /** The full lane count. */
@@ -62,15 +82,9 @@ public class TrafficSystem {
 
     /**
      * Instantiates a new traffic system.
-     *
-     * @param p the p
-     * @param g1 the g1
-     * @param g2 the g2
-     * @param a the a
-     * @param l1 the l1
-     * @param l2 the l2
      */
-    public TrafficSystem(int p, int g1, int g2, int a, int l1, int l2) {
+    public TrafficSystem() {
+    	readParameters();
     	s1 = new Light(p, g1);
     	s2 = new Light(p, g2);
     	r2 = new Lane(l2, null, s2);
@@ -80,19 +94,34 @@ public class TrafficSystem {
     }
 
     /**
-     * Read parameters.
+     * Requires a property file in the same folder named config.properties 
+     * <p>
+	 * Reads the arguments from the properties file.
      */
     public void readParameters() {
-	// Läser in parametrar för simuleringen
-	// Metoden kan läsa från terminalfönster, dialogrutor
-	// eller från en parameterfil. Det sista alternativet
-	// är att föredra vid uttestning av programmet eftersom
-	// man inte då behöver mata in värdena vid varje körning.
-        // Standardklassen Properties är användbar för detta. 
+    	// Läser in parametrar för simuleringen
+    	// Metoden kan läsa från terminalfönster, dialogrutor
+    	// eller från en parameterfil. Det sista alternativet
+    	// är att föredra vid uttestning av programmet eftersom
+    	// man inte då behöver mata in värdena vid varje körning.
+    	// Standardklassen Properties är användbar för detta. 
+
+    	Properties properties = new Properties();
+		try {
+		  properties.load(new FileInputStream("config.properties"));
+		} catch (IOException e) {System.out.println("config.properties not found");}
+		p = Integer.parseInt(properties.getProperty("Period"));
+		g1 = Integer.parseInt(properties.getProperty("Green_time_1"));
+		g2 = Integer.parseInt(properties.getProperty("Green_time_2"));
+		arrivalIntensity = Integer.parseInt(properties.getProperty("Arrival_intensity"));
+		l1 = Integer.parseInt(properties.getProperty("Length_lane_1"));
+		l2 = Integer.parseInt(properties.getProperty("Length_lane_2"));
+		
     }
 
     /**
-     * Step.
+     * Steps the TrafficSystem forward by calling the components' step-methods
+     * and spawning new cars
      */
     public void step() {
 	// Stega systemet ett tidssteg m h a komponenternas step-metoder
@@ -140,7 +169,7 @@ public class TrafficSystem {
     }
 
     /**
-     * Prints the statistics.
+     * Prints the statistics collected.
      */
     public void printStatistics() {
 	// Skriv statistiken samlad så här långt
@@ -154,7 +183,8 @@ public class TrafficSystem {
     }
 
     /**
-     * Prints the.
+     * Prints the contents of the TrafficSystems components converted into 
+     * strings.
      */
     public void print() {
 	// Skriv ut en grafisk representation av kösituationen

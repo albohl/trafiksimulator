@@ -1,7 +1,6 @@
 package trafiksimulator;
 
 public class Car {
-	
 
     private int bornTime;
     
@@ -16,7 +15,6 @@ public class Car {
      * @param dest
      */
     public Car(int bornTime, int dest){
-    	if(bornTime < 0 || dest < 1 || dest > 2) throw new IllegalArgumentException();
     	this.bornTime = bornTime;
     	this.dest = dest;
     }
@@ -34,8 +32,10 @@ public class Car {
     public int getDest(){
     	return dest;
     }
-    /**
-     * Prints the instance variables of the car to console
+    /** 
+     * Converts the contents of the Car into a string.
+     * 
+     * @return the contents of the Car as a string
      */
     public String toString() {
     	return "Car(bornTime = " + this.bornTime + ", dest = " + this.dest + ")";
