@@ -142,6 +142,11 @@ public class Lane {
      *
      * @return the light
      */
+    
+    public Car getLast(){
+    	return theLane[theLane.length - 1].getCurrentCar();
+    }
+    
     public Light getLight(){
     	return light;
     }
