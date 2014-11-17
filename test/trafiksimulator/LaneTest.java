@@ -17,11 +17,12 @@ public class LaneTest {
 	}
 
 
-//	@Test
-//	public void testMatchEnd() {
-//		fail("Not yet implemented");
-//	}
-//
+	@Test
+	public void testMatchEnd() {
+		Lane testLane = new Lane(5, null, null);
+		
+	}
+
 //	@Test
 //	public void testStep() {
 //		fail("Not yet implemented");
