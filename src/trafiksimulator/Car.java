@@ -2,12 +2,12 @@ package trafiksimulator;
 
 public class Car {
 
-    private int bornTime;
+    protected int bornTime;
     
     /**
      * 1 if the car is going forward; 2 if the car is turning
      */
-    private int dest;
+    protected int dest;
 
     /**
      * 
